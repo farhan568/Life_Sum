@@ -10,8 +10,9 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
-  late  List<bool> _isChecked;
+  late List<bool> _isChecked;
   static final Color shoppingListItemC = Color(0xff333333);
+  static final Color shoppingDateC = Color(0xffc3a4a4);
   static final Color shoppingListItemAmountC = Color(0xff989898);
   static final Color shoppingListItemBorderC = Color(0xffF0F0F0);
 
@@ -30,31 +31,51 @@ class _ShoppingListState extends State<ShoppingList> {
           height: 55,
         ),
         body: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 7),
           child: Column(children: [
-            Text(
-              'TUE 11/12 -> THU 11/4 ',
-              textAlign: TextAlign.center,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'TUE 11/12 ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: shoppingDateC),
+                ),
+                Icon(
+                  Icons.arrow_right_alt,
+                  color: shoppingDateC,
+                ),
+                Text(
+                  'THU 11/4 ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: shoppingDateC),
+                ),
+              ],
             ),
-            Text(
-              'This list is based on the days showing in your meal planner ',
-              textAlign: TextAlign.center,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'This list is based on the days showing in your meal planner ',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Expanded(
               child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 35,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 10),
                   itemCount: 15,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                          color:Colors.white,
-                          border: Border(
-                              bottom: BorderSide(
-                                width: 1,
-                                  color: shoppingListItemBorderC
-                              ),
-                          ),
+                        color: Colors.white,
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: shoppingListItemBorderC),
+                        ),
                       ),
                       child: Row(
                         children: [
@@ -74,11 +95,14 @@ class _ShoppingListState extends State<ShoppingList> {
                             children: [
                               Text(
                                 'Avacado',
-                                style: TextStyle(color: shoppingListItemC, fontSize: 15 ),
+                                style: TextStyle(
+                                    color: shoppingListItemC, fontSize: 15),
                               ),
                               Text(
                                 '20 grams',
-                                style: TextStyle(color: shoppingListItemAmountC, fontSize: 11 ),
+                                style: TextStyle(
+                                    color: shoppingListItemAmountC,
+                                    fontSize: 11),
                               ),
                             ],
                           ),
@@ -109,7 +133,7 @@ class ShoppingListAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border( ),
+        border: Border(),
       ),
       child: AppBar(
         backgroundColor: Colors.white,
@@ -118,12 +142,12 @@ class ShoppingListAppBar extends StatelessWidget
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Icon(
-              Icons.chevron_left,
+              Icons.arrow_back,
               color: Colors.black,
             ),
             Text(
               "Shopping List",
-              style: TextStyle(color: Colors.black,fontSize: 18),
+              style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             InkWell(
               onTap: () {

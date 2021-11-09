@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'abdominal_crunch_page.dart';
+
 class MealPlanner extends StatefulWidget {
   MealPlanner({Key? key}) : super(key: key);
 
@@ -22,40 +24,53 @@ class _MealPlannerState extends State<MealPlanner> {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                 color: Colors.grey,
+                  child: Column(
                     children: [
-                      Icon(Icons.chevron_left),
-                      Text(
-                        'Meal planner',
-                        style: TextStyle(fontSize: 20),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => AbdominalCrunch()));
+                                },
+                                child: Icon(Icons.arrow_back)),
+                            Text(
+                              'Meal planner',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Icon(Icons.info_outline),
+                          ],
+                        ),
                       ),
-                      Icon(Icons.info_outline),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'Breakfast',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            'Lunch',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            'Snacks',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            'Dinner',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'Breakfast',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      'Lunch',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      'Snacks',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      'Dinner',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
                 ),
                 SizedBox(height: _screenHeight * 0.02),
               ],
@@ -65,6 +80,7 @@ class _MealPlannerState extends State<MealPlanner> {
                   itemCount: 4,
                   itemBuilder: (context, index) {
                     return Card(
+                      elevation: 2,
                       margin: EdgeInsets.only(left: 10, bottom: 5),
                       child: Column(
                         children: [
@@ -76,7 +92,7 @@ class _MealPlannerState extends State<MealPlanner> {
                             style: TextStyle(color: Colors.black),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -109,40 +125,51 @@ class _MealPlannerState extends State<MealPlanner> {
   SizedBox rowList() {
     return SizedBox(
       height: _screenHeight > _screenWidth
-          ? 0.18 * _screenHeight
-          : 0.18 * _screenWidth,
-      child: Card(
-        margin: EdgeInsets.only(bottom: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
+          ? 0.17 * _screenHeight
+          : 0.17 * _screenWidth,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 3),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          margin: EdgeInsets.only(bottom: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
                 child: Stack(clipBehavior: Clip.none, children: [
-                  Image.asset(
-                    'assets/images/dish_1.jpg',
-                    width: _screenWidth > _screenHeight
-                        ? _screenWidth * 0.6
-                        : _screenHeight * 0.6,
-                    height: _screenHeight > _screenWidth
-                        ? 0.10 * _screenHeight
-                        : 0.10 * _screenWidth,
-                    fit: BoxFit.fill,
-                  ),
-                  SizedBox(
-                    height: _screenHeight * 0.5,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.asset(
+                      'assets/images/dish_1.jpg',
+                      width: _screenWidth > _screenHeight
+                          ? _screenWidth * 0.8
+                          : _screenHeight * 0.8,
+                      height: _screenHeight > _screenWidth
+                          ? 0.10 * _screenHeight
+                          : 0.10 * _screenWidth,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   Positioned(
                     left: 0,
                     right: 0,
                     bottom: -15,
-                    child: CircleAvatar(child: Icon(Icons.refresh)),
+                    child: CircleAvatar(
+                        backgroundColor: refreshIconC,
+                        child: ImageIcon(
+                          AssetImage("assets/images/refresh.png"),
+                          color: Colors.white,
+
+                        )
+                    ),
                   ),
                 ]),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -26,102 +26,126 @@ class _AbdominalCrunchState extends State<AbdominalCrunch> {
         body: Column(
           children: [
             Container(
-              height: 0.3 * _screenHeight,
               color: widget.checkContainerC,
               child: Stack(clipBehavior: Clip.none, children: [
-                Column(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(builder: (context) => ShoppingList()));
-                                  },
-                                  child: Icon(
-                                    Icons.chevron_left,
-                                    color: Colors.white,
-                                  ),
+                Positioned(
+                  child: SizedBox(
+                    height: 0.3 * _screenHeight,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ShoppingList()));
+                                },
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
                                 ),
-                                SizedBox(
-                                  width: _screenWeight*0.05,
+                              ),
+                              SizedBox(
+                                width: _screenWeight * 0.05,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MealPlanner()));
+                                },
+                                child: Text(
+                                  'LIFESUM',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(builder: (context) => MealPlanner()));
-                                  },
-                                  child: Text(
-                                    'LIFESUM',
-                                    style: TextStyle(color: Colors.white,fontSize: 15),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding:  EdgeInsets.only(left: 0.03*_screenWeight,bottom: 0.02*_screenHeight),
-                            child: Text(
-                              'Abdominal (Ab) Crunch',
-                              style: TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 0.03 * _screenWeight,
+                              bottom: 0.02 * _screenHeight),
+                          child: Text(
+                            'Abdominal (Ab) Crunch',
+                            style:
+                                TextStyle(fontSize: 25, color: Colors.white),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 Positioned(
-                    bottom: -40,
-                    right: 15,
-                    top: 150,
-                    child: CircleAvatar(
-                        backgroundColor: widget.checkC,
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                        )))
+                    bottom: -25,
+                    right: 20,
+
+                    child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: FloatingActionButton(
+                          backgroundColor: widget.checkC,
+                          onPressed: () {
+                          },
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          )),
+                    ))
               ]),
             ),
             Padding(
-              padding:  EdgeInsets.only(left: 0.03*_screenWeight),
-
+              padding: EdgeInsets.symmetric(
+                  vertical: 15, horizontal: 0.05 * _screenWeight),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text('41 ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
-                      Text('kcal'),
-                    ],
+                  RichText(
+                    text: TextSpan(
+                        text: '41 ',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text: 'kcal',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.normal),
+                          ),
+                        ]),
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: _screenWeight*0.2,
+                      Flexible(
+                        flex: 1,
                         child: TextFormField(
+
                           decoration: InputDecoration(
-                              hintText: '30'
-                          ),
+                              hintText: '30',
+                              hintStyle:
+                                  TextStyle(color: Colors.black, fontSize: 20)),
                         ),
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 30,
                       ),
-                      SizedBox(
-                        width: _screenWeight*0.6,
+                      Flexible(
+                        flex: 2,
                         child: TextFormField(
                           decoration: InputDecoration(
-                              hintText: 'Minutes'
-                          ),
+                              hintText: 'Minutes',
+                              hintStyle:
+                                  TextStyle(color: Colors.black, fontSize: 20)),
                         ),
                       ),
                     ],

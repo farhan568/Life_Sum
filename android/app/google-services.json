@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465129664903",
+    "project_id": "lifesum-a6173",
+    "storage_bucket": "lifesum-a6173.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465129664903:android:59262c940841cc0cb36322",
+        "android_client_info": {
+          "package_name": "com.example.lifesum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465129664903-m843f6a7l3q97u207vra4o1t3lnebehk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRVxYn7JhdUm47EduU0L8v_W00x_PCadc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465129664903-m843f6a7l3q97u207vra4o1t3lnebehk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
