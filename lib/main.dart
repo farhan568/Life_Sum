@@ -1,21 +1,25 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:lifesum/abdominal_crunch_page.dart';
-import 'package:lifesum/meal_planner_page.dart';
-import 'package:lifesum/preference_survey_page.dart';
-import 'package:lifesum/quick_track_page.dart';
-import 'package:lifesum/shopping_list_page.dart';
-import 'package:lifesum/swap_page.dart';
-import 'package:lifesum/upload_meal_page.dart';
+import 'package:lifesum/model/api_get_model.dart';
+import 'package:lifesum/provider/api_provider.dart';
+import 'package:lifesum/test_api_get.dart';
+import 'package:lifesum/test_api_post.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) {
+       return ApiProvider();
+      },
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:UploadMeal(),
+      home: ApiPost(),
     );
   }
 }

@@ -1,18 +1,30 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lifesum/model/meal.dart';
+import 'package:lifesum/shopping_list_page.dart';
 
 import 'abdominal_crunch_page.dart';
 
 class MealPlanner extends StatefulWidget {
   MealPlanner({Key? key}) : super(key: key);
-
   @override
   State<MealPlanner> createState() => _MealPlannerState();
 }
 
 class _MealPlannerState extends State<MealPlanner> {
   late double _screenHeight, _screenWidth;
+  List <MealUploadModel> mealList=[];
   Color refreshIconC = Color(0xffAAA8B3);
+  bool _isLoading = true;
+
+  @override
+  void initState()  {
+    _getMealData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +52,17 @@ class _MealPlannerState extends State<MealPlanner> {
                                           builder: (context) => AbdominalCrunch()));
                                 },
                                 child: Icon(Icons.arrow_back)),
-                            Text(
-                              'Meal planner',
-                              style: TextStyle(fontSize: 20),
+                            InkWell(
+                              onTap: (){
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ShoppingList()));
+                              },
+                              child: Text(
+                                'Meal planner',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                             Icon(Icons.info_outline),
                           ],
@@ -76,8 +96,8 @@ class _MealPlannerState extends State<MealPlanner> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: 4,
+              child: _isLoading?Center(child: CircularProgressIndicator()): ListView.builder(
+                  itemCount: mealList.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 2,
@@ -97,16 +117,16 @@ class _MealPlannerState extends State<MealPlanner> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Expanded(
-                                  child: rowList(),
+                                  child:rowList(index),
                                 ),
                                 Expanded(
-                                  child: rowList(),
+                                  child:rowList(index),
                                 ),
                                 Expanded(
-                                  child: rowList(),
+                                  child:rowList(index),
                                 ),
                                 Expanded(
-                                  child: rowList(),
+                                  child:rowList(index),
                                 ),
                               ],
                             ),
@@ -122,7 +142,7 @@ class _MealPlannerState extends State<MealPlanner> {
     );
   }
 
-  SizedBox rowList() {
+  Widget rowList(int index) {
     return SizedBox(
       height: _screenHeight > _screenWidth
           ? 0.17 * _screenHeight
@@ -142,8 +162,9 @@ class _MealPlannerState extends State<MealPlanner> {
                 child: Stack(clipBehavior: Clip.none, children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
-                      'assets/images/dish_1.jpg',
+                    child: FadeInImage.assetNetwork(
+                      image:mealList[index].imgUrl!,
+                      placeholder:'assets/images/dish_1.jpg',
                       width: _screenWidth > _screenHeight
                           ? _screenWidth * 0.8
                           : _screenHeight * 0.8,
@@ -174,4 +195,32 @@ class _MealPlannerState extends State<MealPlanner> {
       ),
     );
   }
+_getMealData() async {
+  final fbInstance = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: "Farhan@gmail.com", password: 'Farhan123');
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+  try {
+    FirebaseFirestore.instance
+        .collection("meal")
+        .snapshots()
+        .listen((event) {
+      print(event.docs.length);
+      for (var element in event.docs) {
+        MealUploadModel model = MealUploadModel.fromJson(element.data());
+        mealList.add(model);
+
+      }
+      setState(() {
+          _isLoading = false;
+      });
+        }
+
+
+    );
+
+  } on FirebaseException catch (e) {
+    print(e.toString());
+  }
+}
+
 }

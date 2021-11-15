@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lifesum/abdominal_crunch_page.dart';
+import 'package:lifesum/swap_page.dart';
 
 class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
@@ -79,16 +80,22 @@ class _ShoppingListState extends State<ShoppingList> {
                       ),
                       child: Row(
                         children: [
-                          Checkbox(
-                            splashRadius: 50,
-                            checkColor: Colors.white,
-                            value: _isChecked[index],
-                            shape: CircleBorder(),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                _isChecked[index] = value!;
-                              });
-                            },
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                              unselectedWidgetColor: shoppingListItemAmountC,
+                            ),
+                            child: Checkbox(
+                              splashRadius: 50,
+                              activeColor: Colors.grey,
+                              checkColor: Colors.white,
+                              value: _isChecked[index],
+                              shape: CircleBorder(),
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  _isChecked[index] = value!;
+                                });
+                              },
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +159,7 @@ class ShoppingListAppBar extends StatelessWidget
             InkWell(
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => AbdominalCrunch()));
+                    MaterialPageRoute(builder: (context) => Swap()));
               },
               child: Icon(
                 Icons.share,

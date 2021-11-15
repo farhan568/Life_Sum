@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lifesum/meal_planner_page.dart';
 import 'package:lifesum/shopping_list_page.dart';
+import 'package:lifesum/upload_meal_page.dart';
 
 class AbdominalCrunch extends StatefulWidget {
   AbdominalCrunch({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _AbdominalCrunchState extends State<AbdominalCrunch> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ShoppingList()));
+                                              UploadMeal()));
                                 },
                                 child: Icon(
                                   Icons.arrow_back,

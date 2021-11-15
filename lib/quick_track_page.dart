@@ -11,6 +11,7 @@ class QuickTrack extends StatefulWidget {
 class _QuickTrackState extends State<QuickTrack> {
   late double _screenWidth, _screenHeight;
   Color fieldInputC = Colors.grey;
+
   @override
   Widget build(BuildContext context) {
     _screenHeight = MediaQuery.of(context).size.height;
@@ -20,6 +21,7 @@ class _QuickTrackState extends State<QuickTrack> {
         child: Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -30,7 +32,7 @@ class _QuickTrackState extends State<QuickTrack> {
                     width: _screenWidth * 0.04,
                   ),
                   Text(
-                    'Quick Track',
+                    'QUICK TRACK',
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
@@ -72,8 +74,24 @@ class _QuickTrackState extends State<QuickTrack> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.end,
         decoration: InputDecoration(
-          prefixIcon:
-              Padding(padding: EdgeInsets.only(top: 0.015 * _screenHeight ), child: Text(prefix,textAlign: TextAlign.center, )),
+
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 0.5,
+            ),
+          ),
+
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: fieldInputC),
+          ),
+
+          prefixIcon: Padding(
+              padding: EdgeInsets.only(top: 0.015 * _screenHeight),
+              child: Text(
+                prefix,
+                textAlign: TextAlign.center,
+              )),
           hintText: suffix,
           hintStyle: TextStyle(color: fieldInputC),
         ),

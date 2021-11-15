@@ -8,6 +8,7 @@ class MealUploadModel {
     required this.mealType,
     required this.mealName,
     required this.mealCalories,
+    this.imgUrl,
   });
 
 
@@ -15,6 +16,7 @@ class MealUploadModel {
     mealType = data["Name"]??"Meal Type not defined";
     mealCalories = data["Email"]??"Calories Not defined";
     mealName = data["Email"]??"Meal Name not defined";
+    imgUrl = data["imgUrl"];
   }
 
   Map<String, dynamic> toJson () {
@@ -22,6 +24,7 @@ class MealUploadModel {
       "mealType": mealType,
       "mealCalories": mealCalories,
       "mealName": mealName,
+      "imgUrl" : imgUrl,
 
 
     };

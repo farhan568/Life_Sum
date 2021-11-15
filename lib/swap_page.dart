@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:lifesum/quick_track_page.dart';
 
 class Swap extends StatefulWidget {
   const Swap({Key? key}) : super(key: key);
@@ -31,9 +32,15 @@ class _SwapState extends State<Swap> {
                   SizedBox(
                     width: 0.05 * _screenWidth,
                   ),
-                  Text(
-                    'SWAP',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  InkWell(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => QuickTrack()));
+                    },
+                    child: Text(
+                      'SWAP',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
                   ),
                   SizedBox(
                     height: _screenHeight * 0.05,
