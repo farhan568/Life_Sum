@@ -20,34 +20,47 @@ class _MyProviderState extends State<MyProvider> {
   late List<ApiGetModel> apiList = [];
   late ApiProvider apiP;
 
+
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     getData();
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('My App')),
-        body: SafeArea(
-          child: Consumer<ApiProvider>(builder: (BuildContext context, model,  child) {
-            apiP = model;
-            return model.state==0?Center(child: CircularProgressIndicator(),):ListView.builder(itemCount: apiP.apiList.length, itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text( "Tittle: " + apiP.apiList[index].title.toString() ),
-                    Text( "id: " + apiP.apiList[index].id.toString() ),
-                    Text( "userID: " + apiP.apiList[index].userId.toString() ),
-                    Text( "Body: " + apiP.apiList[index].body.toString() ),
-                  ],
-                ),
-              );
-            },);
-          },),
-        )
+          appBar: AppBar(title: Text('My App')),
+          body: SafeArea(
+            child: Consumer<ApiProvider>(
+              builder: (BuildContext context, model, child) {
+                apiP = model;
+                return model.state == 0 ? Center(
+                  child: CircularProgressIndicator(),) : ListView.builder(
+                  itemCount: apiP.apiList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Tittle: " +
+                              apiP.apiList[index].title.toString()),
+                          Text("id: " + apiP.apiList[index].id.toString()),
+                          Text("userID: " +
+                              apiP.apiList[index].userId.toString()),
+                          Text("Body: " + apiP.apiList[index].body.toString()),
+                        ],
+                      ),
+                    );
+                  },);
+              },),
+          )
       ),
     );
   }

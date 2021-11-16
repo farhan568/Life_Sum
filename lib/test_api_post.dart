@@ -137,7 +137,6 @@ class _ApiPostState extends State<ApiPost> {
       print(e.toString());
     }
   }
-
   Future _imgFromGallery() async {
     final image = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
