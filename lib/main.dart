@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lifesum/country_code_picker_lib.dart';
 import 'package:lifesum/model/api_get_model.dart';
+import 'package:lifesum/permission.dart';
 import 'package:lifesum/provider/api_provider.dart';
+import 'package:lifesum/slider_lib.dart';
 import 'package:lifesum/table_calender_lib.dart';
 import 'package:lifesum/test_api_get.dart';
 import 'package:lifesum/test_api_post.dart';
 import 'package:lifesum/url_lib.dart';
+import 'package:lifesum/video_player_lib.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {

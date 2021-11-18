@@ -15,7 +15,7 @@ class TableEventsExampleState extends StatefulWidget {
 }
 
 class _TableEventsExampleStateState extends State<TableEventsExampleState> {
-  DateTime _selectedDay =DateTime.now();
+  DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   late Map<DateTime, List<CalEvent>> selectedEvents;
   TextEditingController _eventController = TextEditingController();
@@ -28,7 +28,6 @@ class _TableEventsExampleStateState extends State<TableEventsExampleState> {
   }
 
   List<CalEvent> _getEventsFromDay(DateTime date) {
-
     return selectedEvents[date] ?? [];
   }
 
@@ -55,18 +54,17 @@ class _TableEventsExampleStateState extends State<TableEventsExampleState> {
               },
               onDaySelected: (selectedDay, focusedDay) {
                 if (!isSameDay(_selectedDay, selectedDay)) {
-                  // Calls `setState()` when updating the selected day 
-                setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              } 
-               );
-          }
+                  // Calls `setState()` when updating the selected day
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                }
               },
               onPageChanged: (focusedDay) {
-          // No need to call `setState()` here
-          _focusedDay = focusedDay;
-        }, 
+                // No need to call `setState()` here
+                _focusedDay = focusedDay;
+              },
             ),
             ..._getEventsFromDay(_selectedDay).map(
               (CalEvent event) => ListTile(
@@ -97,14 +95,7 @@ class _TableEventsExampleStateState extends State<TableEventsExampleState> {
                   if (_eventController.text.isEmpty) {
                   } else {
                     if (selectedEvents[_selectedDay] != null) {
-                      Fluttertoast.showToast(
-                          msg: "Another Event Added",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      print('added');
                       _uploadEvent(CalEvent(
                           title: _eventController.text,
                           selectedDay: _selectedDay));
@@ -115,14 +106,7 @@ class _TableEventsExampleStateState extends State<TableEventsExampleState> {
                       );
                       // _uploadEvent(CalEvent(title: _eventController.text,selectedDay: _selectedDay));
                     } else {
-                      Fluttertoast.showToast(
-                          msg: "First Event Added ",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      print('First added');
                       selectedEvents[_selectedDay] = [
                         CalEvent(
                             title: _eventController.text,
@@ -161,35 +145,57 @@ class _TableEventsExampleStateState extends State<TableEventsExampleState> {
   }
 
   _fetchEvents() async {
+    print('Fetch Events Called');
     final fbInstance = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: "Farhan@gmail.com", password: 'Farhan123');
     try {
-      FirebaseFirestore.instance
-          .collection("events")
-          .snapshots()
-          .listen((event) {
-        for (var element in event.docs) {
-          CalEvent calEvent = CalEvent.fromJson(element.data());
-          if (selectedEvents[calEvent.selectedDay] != null){
-            selectedEvents[calEvent.selectedDay]!.add(
-              CalEvent(
-                  title: calEvent.title,
-                  selectedDay: calEvent.selectedDay),
-            );
-          }
-          else {
-            selectedEvents[calEvent.selectedDay] = [
-              CalEvent(
-                  title: calEvent.title,
-                  selectedDay: calEvent.selectedDay),
-            ];
-          }
-          print(calEvent.title);
-        }
-      });
-      setState(() {});
-    } on FirebaseException catch (e) {
+      FirebaseFirestore.instance.collection("events").get().then(
+        (value) {
+          value.docs.forEach((element) {
+            CalEvent calEvent = CalEvent.fromJson(element.data());
+            if (selectedEvents[calEvent.selectedDay] != null) {
+              selectedEvents[calEvent.selectedDay]!.add(
+                CalEvent(
+                    title: calEvent.title, selectedDay: calEvent.selectedDay),
+              );
+            } else {
+              selectedEvents[calEvent.selectedDay] = [
+                CalEvent(
+                    title: calEvent.title, selectedDay: calEvent.selectedDay),
+              ];
+            }
+          });
+        setState(() {});
+        },
+      );
+      
+    } on FirebaseAuthException catch (e) {
       print(e.toString());
     }
+    // try {
+    //   FirebaseFirestore.instance
+    //       .collection("events")
+    //       .snapshots()
+    //       .listen((event) {
+    //     for (var element in event.docs) {
+    //       CalEvent calEvent = CalEvent.fromJson(element.data());
+    //       if (selectedEvents[calEvent.selectedDay] != null) {
+    //         selectedEvents[calEvent.selectedDay]!.add(
+    //           CalEvent(
+    //               title: calEvent.title, selectedDay: calEvent.selectedDay),
+    //         );
+    //       } else {
+    //         selectedEvents[calEvent.selectedDay] = [
+    //           CalEvent(
+    //               title: calEvent.title, selectedDay: calEvent.selectedDay),
+    //         ];
+    //       }
+    //       print(calEvent.title);
+    //     }
+    //     setState(() {});
+    //   });
+    // } on FirebaseException catch (e) {
+    //   print(e.toString());
+    // }
   }
 }
